@@ -1,119 +1,70 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Orbitron:wght@777&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+# Getting Started with Create React App
 
-# <p align="center"> **Stack AutoComplete**
-#### <p align="center">Project 3: Get Mern Smacked
- 
-</p>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-<p align="center">
- 
-  <img width="300" height="300" src="https://imgur.com/EPFW50c">
- 
-</p>
+## Available Scripts
 
+In the project directory, you can run:
 
-## Description
+### `npm start`
 
-Stack Autocomplete is a public platform that aims to build a community driven knowledge Database. Our target audience is the average home diy or commercial industrial car mechanic. We aim to build a vast network in our sphere of automechnic influence that empowers future mechanics, engineers, scholars, or anyone that has a desire and interest to learn in an Automotive space. Our application of this is similiar to coding based Database "Stackoverflow" where we will follow Automotive Compliance*statewide*, and give the user the ability to come together and solve problems.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Features
-Necessities
- 
- *Not Yet Implemented*
- * React
- * GraphQL with Node.js and Express
- * Mongo with Mongoose ODM DB
- * Queries and Mutations for 
-     * retrieving, 
-     * adding, 
-     * updating
-     * deleting data
- * Use Polished UI
- * Be Deployed with Heroku(with Data)
- * Be Interactive( Respond to stimuli)
- * Include Some form of authentication (JSON webtoken)
+### `npm test`
 
-Future Additions
- * Use a web manifest
- * Use service workers
- * is Installable (PWA - Progressive Web app)
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Usage
+### `npm run build`
 
-```c++
-The main gist of this program
-addasdsd
-oasdsdsadsaasd
-adsdadsadsa
-you can retrieve them for later use.
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-So this application - 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-```md
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-  * Frontend
+### `npm run eject`
 
-*       Framework : React
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-  *     Apollo Client
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-  *     asdsda
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-  * Back-End
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-  *     ads
+## Learn More
 
-  *     asdsaasdasd
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-  *     
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-  *
+### Code Splitting
 
-```
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-The following animation demonstrates the application functionality:
+### Analyzing the Bundle Size
 
-![Gif of finished product](Some link )
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-The following animation:
+### Making a Progressive Web App
 
-![Gif of finished product](Some link )
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-The following animation :
+### Advanced Configuration
 
-![Gif of finished product](Some link )
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-The following animation :
+### Deployment
 
-!![Gif of finished product](Some link )
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
+### `npm run build` fails to minify
 
-## Links
-
-[Deploy Link](https://warm-hollows-57270.herokuapp.com/)
-
-[GitHub Link](https://github.com/bkturner1220/stack_autocomplete)
-
-## License
-
-[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/about/)
-
-## Contributions
-```md
-
-[Brian Turner](https://github.com/bkturner1220)
-[Stephen Puthenpurackal](https://github.com/datfoosteve)
-[Jason Day - The King 👑](https://github.com/shivermotion)
-[Luis Santiago](https://github.com/Wingz003)
-```
-## Project/Assignment-Status
-```md
-Project Status - Working On it
-Assignment Status - Not turned in
-
-Future Plans: None yet
-```
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
