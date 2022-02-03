@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
+const commentSchema = require('./Comment')
+
 
 const answerSchema = new Schema({
 
@@ -13,7 +15,7 @@ const answerSchema = new Schema({
         minlength: 1,
         maxlength: 280,
     },
-    comments: [commentSchema],
+    // comments: [commentSchema],
     points: {
         type: Number,
         default: 0,

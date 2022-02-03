@@ -27,7 +27,7 @@ const typeDefs = gql`
     answerAuthor: ID
     answerBody: String
     comments: [Comment]!
-    points: Number
+    points: Int
     upVotedBy: ID
     downVotedBy: ID 
     createdAt: String
@@ -59,6 +59,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addQuestion(questionText: String!): Question
+    addAnswer(answerBody: String!, questionId: ID!): Question 
+    removeAnswer(answerBody: String!, questionId: ID!): Question 
     addComment(questionId: ID!, commentText: String!): Question
     removeQuestion(questionId: ID!): Question
     removeComment(questionId: ID!, commentId: ID!): Question
