@@ -10,24 +10,33 @@ const typeDefs = gql`
   }
 
   type Question {
-    _id: ID
+    questionAuthor: ID
     questionTitle: String
     questionBody: String
-    questionAuthor: String
     comments: [Comment]!
     answers: [Answer]!
+    upVotedBy: ID
+    downVotedBy: ID 
+    acceptedAnswer: ID
     createdAt: String
+    updatedAt: String
   }
 
   
   type Answer {
-  
+    answerAuthor: ID
+    answerBody: String
+    comments: [Comment]!
+    points: Number
+    upVotedBy: ID
+    downVotedBy: ID 
+    createdAt: String
+    updatedAt: String
   }
 
 
   type Comment {
-    _id: ID
-    commentAuthor: String
+    commentAuthor: ID
     commentBody: String
     createdAt: String
     updatedAt: String
