@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
-const { answerSchema, commentSchema } = require('./Answer');
+const answerSchema  = require('./Answer');
+const commentSchema  = require('./Comment');
 
 
 const questionSchema = new Schema({
@@ -22,8 +23,15 @@ const questionSchema = new Schema({
     maxlength: 280,
     trim: true,
   },
-  comments: [commentSchema],
-  answers: [answerSchema],
+  // comments: {
+  //   type: [commentSchema],
+  //   default: undefined
+  // },
+
+  // answers: {
+  //  type: [answerSchema],
+  //  default: undefined
+  // },
   upVotedBy: {
     type: Schema.Types.ObjectId,
     ref: 'User',
