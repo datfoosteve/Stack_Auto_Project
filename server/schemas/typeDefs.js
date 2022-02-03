@@ -6,22 +6,40 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    questions: [Question]!
   }
 
-  type Thought {
-    _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
+  type Question {
+    questionAuthor: ID
+    questionTitle: String
+    questionBody: String
     comments: [Comment]!
+    answers: [Answer]!
+    upVotedBy: ID
+    downVotedBy: ID 
+    acceptedAnswer: ID
+    createdAt: String
+    updatedAt: String
   }
+
+  
+  type Answer {
+    answerAuthor: ID
+    answerBody: String
+    comments: [Comment]!
+    points: Number
+    upVotedBy: ID
+    downVotedBy: ID 
+    createdAt: String
+    updatedAt: String
+  }
+
 
   type Comment {
-    _id: ID
-    commentText: String
-    commentAuthor: String
+    commentAuthor: ID
+    commentBody: String
     createdAt: String
+    updatedAt: String
   }
 
   type Auth {
@@ -32,18 +50,18 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
+    questions(username: String): [Question]
+    question(questionId: ID!): Question
     me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addThought(thoughtText: String!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addQuestion(questionText: String!): Question
+    addComment(questionId: ID!, commentText: String!): Question
+    removeQuestion(questionId: ID!): Question
+    removeComment(questionId: ID!, commentId: ID!): Question
   }
 `;
 
