@@ -19,11 +19,18 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  
+  type Answer {
+  
+  }
+
+
   type Comment {
     _id: ID
-    commentText: String
     commentAuthor: String
+    commentBody: String
     createdAt: String
+    updatedAt: String
   }
 
   type Auth {
