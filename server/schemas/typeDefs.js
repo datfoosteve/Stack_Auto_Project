@@ -28,20 +28,20 @@ const typeDefs = gql`
   
   type Answer {
     _id: ID
-    answerAuthor: ID
+    answerAuthor: User
     answerBody: String
     comments: [Comment]!
+    answerToQuestion: ID
     points: Int
-    upVotedBy: ID
-    downVotedBy: ID 
+    upVotedBy: [User]
+    downVotedBy: [User] 
     createdAt: String
     updatedAt: String
   }
 
-
   type Comment {
     _id: ID
-    commentAuthor: ID
+    commentAuthor: User
     commentBody: String
     createdAt: String
     updatedAt: String
@@ -57,17 +57,24 @@ const typeDefs = gql`
     user(_id: ID!): User
     questions(_id: ID!): [Question]
     question(_id: ID!): Question
+    answers: [Answer]
+    answer(_id: ID!): Answer
+    comments: [Comment]
+    comment(_id: ID!): Comment
     me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addQuestion(questionText: String!): Question
+
+    addQuestion(_id: ID!): Question
+    removeQuestion(_id: ID!): Question
+
     addAnswer(answerBody: String!, questionId: ID!): Question 
     removeAnswer(answerBody: String!, questionId: ID!): Question 
-    addComment(questionId: ID!, commentText: String!): Question
-    removeQuestion(questionId: ID!): Question
+
+    addComment(questionId: ID!, commentBody: String!): Question
     removeComment(questionId: ID!, commentId: ID!): Question
   }
 `;

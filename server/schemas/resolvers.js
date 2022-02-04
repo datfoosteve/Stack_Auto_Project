@@ -18,6 +18,20 @@ const resolvers = {
     question: async (parent, { _id }) => {
       return Question.findOne({ _id }).populate('questionAuthor');
     },
+    answers: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return Answer.find({}).populate('answerAuthor').sort({ createdAt: -1 });
+    },
+    answer: async (parent, { _id }, context) => {
+      return Answer.findOne({ _id }).populate('answerAuthor');
+    },
+    comments: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return Comment.find({}).populate('commentAuthor').sort({ createdAt: -1 });
+    },
+    comment: async (parent, { _id }, context) => {
+      return Comment.findOne({ _id }).populate('commentAuthor');
+    },
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate('questions');
@@ -49,16 +63,33 @@ const resolvers = {
 
       return { token, user };
     },
-    addQuestion: async (parent, { questionBody }, context) => {
+    addQuestion: async (parent, { _id }, context) => {
       if (context.user) {
-        const question = await Question.create({
-          questionBody,
+        const newQuestion = await Question.create({
+          _id,
+          questionBody
+
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { questions: newQuestion._id } }
+        );
+
+        return newQuestion;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeQuestion: async (parent, { questionId }, context) => {
+      if (context.user) {
+        const question = await Question.findOneAndDelete({
+          _id: questionId,
           questionAuthor: context.user.username,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { questions: question._id } }
+          { $pull: { questions: question._id } }
         );
 
         return question;
@@ -82,22 +113,7 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    removeQuestion: async (parent, { questionId }, context) => {
-      if (context.user) {
-        const question = await Question.findOneAndDelete({
-          _id: questionId,
-          questionAuthor: context.user.username,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { questions: question._id } }
-        );
-
-        return question;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
+    
     removeAnswer: async (parent, { questionId, answerId }, context) => {
       if (context.user) {
         return Question.findOneAndUpdate(
@@ -115,6 +131,42 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    
+    addAnswer: async (parent, { questionId, answerBody }, context) => {
+      if (context.user) {
+        return Question.findOneAndUpdate(
+          { _id: questionId },
+          {
+            $addToSet: {
+              answers: { answerBody, answerAuthor: context.user.username },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    
+    removeAnswer: async (parent, { questionId, answerId }, context) => {
+      if (context.user) {
+        return Question.findOneAndUpdate(
+          { _id: questionId },
+          {
+            $pull: {
+              answers: {
+                _id: answerId,
+                answerAuthor: context.user.username,
+              },
+            },
+          },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    }
   },
 };
 
