@@ -25,6 +25,18 @@ const userSchema = new Schema({
       ref: 'Question',
     },
   ],
+  answers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Answer',
+    },
+  ],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {

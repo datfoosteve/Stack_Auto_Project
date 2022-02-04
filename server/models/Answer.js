@@ -1,7 +1,9 @@
-const { Schema, model } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
-const commentSchema = require('./Comment')
+const mongoose = require('mongoose');
 
+const { Schema } = mongoose;
+
+
+const Comment = require('./Comment');
 
 const answerSchema = new Schema({
 
@@ -15,19 +17,27 @@ const answerSchema = new Schema({
         minlength: 1,
         maxlength: 280,
     },
-    // comments: [commentSchema],
+    // comments: [Comment.schema],
+    comments: [{ 
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+      }],
+    answerToQuestion: {
+        type: Schema.Types.ObjectId,
+        ref: 'Question' 
+    },
     points: {
         type: Number,
         default: 0,
     },
-    upVotedBy: {
+    upVotedBy: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
-    downVotedBy: {
+    }],
+    downVotedBy: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
+    }],
     createdAt: {
         type: Date,
         default: Date.now,
@@ -38,11 +48,11 @@ const answerSchema = new Schema({
         default: Date.now,
         get: (timestamp) => dateFormat(timestamp),
     },
+    
 
 })
 
 
+const Answer = mongoose.model('Answer', answerSchema);
 
-const Answer = model('Answer', answerSchema);
-
-module.exports = Answer;
+module.exports =  Answer;  

@@ -7,10 +7,13 @@ const typeDefs = gql`
     email: String
     password: String
     questions: [Question]!
+    answers: [Answer]!
+    comments: [Comment]!
   }
 
   type Question {
-    questionAuthor: ID
+    _id: ID
+    questionAuthor: User
     questionTitle: String
     questionBody: String
     comments: [Comment]!
@@ -24,6 +27,7 @@ const typeDefs = gql`
 
   
   type Answer {
+    _id: ID
     answerAuthor: ID
     answerBody: String
     comments: [Comment]!
@@ -36,6 +40,7 @@ const typeDefs = gql`
 
 
   type Comment {
+    _id: ID
     commentAuthor: ID
     commentBody: String
     createdAt: String
@@ -49,9 +54,9 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    user(username: String!): User
-    questions(username: String): [Question]
-    question(questionId: ID!): Question
+    user(_id: ID!): User
+    questions(_id: ID!): [Question]
+    question(_id: ID!): Question
     me: User
   }
 

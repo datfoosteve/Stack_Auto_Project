@@ -1,21 +1,22 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Question } = require('../models');
+const { User, Question, Comment, Answer } = require('../models');
+const { populate } = require('../models/User');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('questions');
+      return User.find().populate('questions').populate('questionAuthor');
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('questions');
+    user: async (parent, { _id }) => {
+      return User.findOne({ _id }).populate('questions').populate('questionAuthor');
     },
-    questions: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Question.find(params).sort({ createdAt: -1 });
+    questions: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return Question.find(params).populate('questionAuthor').sort({ createdAt: -1 });
     },
-    question: async (parent, { questionId }) => {
-      return Question.findOne({ _id: questionId });
+    question: async (parent, { _id }) => {
+      return Question.findOne({ _id }).populate('questionAuthor');
     },
     me: async (parent, args, context) => {
       if (context.user) {
