@@ -63,13 +63,15 @@ const resolvers = {
 
       return { token, user };
     },
-    addQuestion: async (parent, { _id }, context) => {
+    addQuestion: async (parent, { questionTitle, questionBody }, context) => {
       if (context.user) {
-        const newQuestion = await Question.create({
-          _id,
-          questionBody
+        const user = await User.findById(context.user._id);
+        const newQuestion = await Question.create({ 
 
-        });
+          questionAuthor: user,
+          questionTitle: questionTitle,
+          questionBody: questionBody
+         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -82,10 +84,7 @@ const resolvers = {
     },
     removeQuestion: async (parent, { questionId }, context) => {
       if (context.user) {
-        const question = await Question.findOneAndDelete({
-          _id: questionId,
-          questionAuthor: context.user.username,
-        });
+        const question = await Question.findByIdAndDelete(questionId);
 
         await User.findOneAndUpdate(
           { _id: context.user._id },

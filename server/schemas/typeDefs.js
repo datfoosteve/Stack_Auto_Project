@@ -68,8 +68,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
 
-    addQuestion(_id: ID!): Question
-    removeQuestion(_id: ID!): Question
+    addQuestion(questionTitle: String!, questionBody: String!): Question
+    removeQuestion(questionId: ID!): Question
 
     addAnswer(answerBody: String!, questionId: ID!): Question 
     removeAnswer(answerBody: String!, questionId: ID!): Question 
@@ -80,3 +80,11 @@ const typeDefs = gql`
 `;
 
 module.exports = typeDefs;
+
+
+// mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {
+//   createReview(episode: $ep, review: $review) {
+//     stars
+//     commentary
+//   }
+// }
