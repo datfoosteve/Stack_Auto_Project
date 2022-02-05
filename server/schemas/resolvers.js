@@ -3,6 +3,7 @@ const { User, Question, Comment, Answer } = require('../models');
 const { populate } = require('../models/User');
 const { signToken } = require('../utils/auth');
 
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -16,7 +17,21 @@ const resolvers = {
       return Question.find(params).populate('questionAuthor').sort({ createdAt: -1 });
     },
     question: async (parent, { _id }) => {
-      return Question.findOne({ _id }).populate('questionAuthor');
+      return Question.findOne({ _id }).populate('questionAuthor').populate('answers').populate('answerBody');
+    },
+    answers: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return Answer.find({}).populate('answerAuthor').sort({ createdAt: -1 });
+    },
+    answer: async (parent, { _id }, context) => {
+      return Answer.findOne({ _id }).populate('answerAuthor');
+    },
+    comments: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return Comment.find({}).populate('commentAuthor').sort({ createdAt: -1 });
+    },
+    comment: async (parent, { _id }, context) => {
+      return Comment.findOne({ _id }).populate('commentAuthor');
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -49,45 +64,28 @@ const resolvers = {
 
       return { token, user };
     },
-    addQuestion: async (parent, { questionBody }, context) => {
+    addQuestion: async (parent, { questionTitle, questionBody }, context) => {
       if (context.user) {
-        const question = await Question.create({
-          questionBody,
-          questionAuthor: context.user.username,
+        const user = await User.findById(context.user._id);
+        const newQuestion = await Question.create({
+
+          questionAuthor: user,
+          questionTitle: questionTitle,
+          questionBody: questionBody
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { questions: question._id } }
+          { $addToSet: { questions: newQuestion._id } }
         );
 
-        return question;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    addAnswer: async (parent, { questionId, answerBody }, context) => {
-      if (context.user) {
-        return Question.findOneAndUpdate(
-          { _id: questionId },
-          {
-            $addToSet: {
-              answers: { answerBody, answerAuthor: context.user.username },
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
+        return newQuestion;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
     removeQuestion: async (parent, { questionId }, context) => {
       if (context.user) {
-        const question = await Question.findOneAndDelete({
-          _id: questionId,
-          questionAuthor: context.user.username,
-        });
+        const question = await Question.findByIdAndDelete(questionId);
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -98,24 +96,130 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    addAnswer: async (parent, { questionId, answerBody }, context) => {
+      if (context.user) {
+        const answer = await Answer.create({
+          answerAuthor: context.user,
+          answerBody,
+          answerToQuestion: questionId
+        });
+        await Question.findOneAndUpdate(
+          { _id: questionId },
+          {
+            $addToSet: {
+              answers: answer,
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        return answer;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
     removeAnswer: async (parent, { questionId, answerId }, context) => {
       if (context.user) {
-        return Question.findOneAndUpdate(
+        const answer = await Answer.findByIdAndDelete(answerId);
+        await Question.findOneAndUpdate(
           { _id: questionId },
           {
             $pull: {
-              answers: {
-                _id: answerId,
-                answerAuthor: context.user.username,
-              },
+              answers: answer._id,
+            },
+          },
+        );
+        return answer;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    addCommentToQuestion: async (parent, { questionId, commentBody }, context) => {
+      if (context.user) {
+        const comment = await Comment.create({
+          commentBody,
+          commentAuthor: context.user._id
+        });
+        await Question.findOneAndUpdate(
+          { _id: questionId },
+          {
+            $addToSet: {
+              comments: comment,
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        await User.findByIdAndUpdate(context.user._id, {$addToSet: {comments: comment}});
+        return comment;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addCommentToAnswer: async (parent, { answerId, commentBody }, context) => {
+      if (context.user) {
+        const comment = await Comment.create({
+          commentBody,
+          commentAuthor: context.user._id,
+          
+        })
+        await Answer.findOneAndUpdate(
+          { _id: answerId },
+          {
+            $addToSet: {
+              comments: comment,
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        await User.findByIdAndUpdate(context.user._id, {$addToSet: {comments: comment}});
+        return comment;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    removeCommentFromQuestion: async (parent, { questionId, commentId }, context) => {
+      if (context.user) {
+        const comment = await Comment.findByIdAndDelete(commentId);
+        await Question.findOneAndUpdate(
+          { _id: questionId },
+          {
+            $pull: {
+              comments: comment._id,
             },
           },
           { new: true }
         );
+        await User.findByIdAndUpdate(context.user._id, {$pull: {comments: comment._id}});
+        return comment;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    removeCommentFromAnswer: async (parent, { answerId, commentId }, context) => {
+      if (context.user) {
+        const comment = await Comment.findByIdAndDelete(commentId);
+        await Answer.findOneAndUpdate(
+          { _id: answerId },
+          {
+            $pull: {
+              comments: comment._id,
+            },
+          },
+          { new: true }
+        );
+        await User.findByIdAndUpdate(context.user._id, {$pull: {comments: comment._id}});
+        return comment;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    }
   },
+
 };
 
 module.exports = resolvers;

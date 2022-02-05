@@ -34,20 +34,20 @@ const typeDefs = gql`
   
   type Answer {
     _id: ID
-    answerAuthor: ID
+    answerAuthor: User
     answerBody: String
     comments: [Comment]!
+    answerToQuestion: ID
     points: Int
-    upVotedBy: ID
-    downVotedBy: ID 
+    upVotedBy: [User]
+    downVotedBy: [User] 
     createdAt: String
     updatedAt: String
   }
 
-
   type Comment {
     _id: ID
-    commentAuthor: ID
+    commentAuthor: User
     commentBody: String
     createdAt: String
     updatedAt: String
@@ -63,19 +63,37 @@ const typeDefs = gql`
     user(_id: ID!): User
     questions(_id: ID!): [Question]
     question(_id: ID!): Question
+    answers: [Answer]
+    answer(_id: ID!): Answer
+    comments: [Comment]
+    comment(_id: ID!): Comment
     me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addQuestion(questionText: String!): Question
-    addAnswer(answerBody: String!, questionId: ID!): Question 
-    removeAnswer(answerBody: String!, questionId: ID!): Question 
-    addComment(questionId: ID!, commentText: String!): Question
+
+    addQuestion(questionTitle: String!, questionBody: String!): Question
     removeQuestion(questionId: ID!): Question
-    removeComment(questionId: ID!, commentId: ID!): Question
+
+    addAnswer(questionId: ID!, answerBody: String!): Answer 
+    removeAnswer( questionId: ID!, answerId: ID!): Answer
+
+    addCommentToQuestion(questionId: ID!, commentBody: String!): Comment
+    removeCommentFromQuestion(questionId: ID!, commentId: ID!): Comment
+
+    addCommentToAnswer(answerId: ID!, commentBody: String!): Comment
+    removeCommentFromAnswer(answerId: ID!, commentId: ID!): Comment
   }
 `;
 
 module.exports = typeDefs;
+
+
+// mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {
+//   createReview(episode: $ep, review: $review) {
+//     stars
+//     commentary
+//   }
+// }
