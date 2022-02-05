@@ -71,11 +71,14 @@ const typeDefs = gql`
     addQuestion(questionTitle: String!, questionBody: String!): Question
     removeQuestion(questionId: ID!): Question
 
-    addAnswer(answerBody: String!, questionId: ID!): Question 
-    removeAnswer(answerBody: String!, questionId: ID!): Question 
+    addAnswer(questionId: ID!, answerBody: String!): Answer 
+    removeAnswer( questionId: ID!, answerId: ID!): Answer
 
-    addComment(questionId: ID!, commentBody: String!): Question
-    removeComment(questionId: ID!, commentId: ID!): Question
+    addCommentToQuestion(questionId: ID!, commentBody: String!): Comment
+    removeCommentFromQuestion(questionId: ID!, commentId: ID!): Comment
+
+    addCommentToAnswer(answerId: ID!, commentBody: String!): Comment
+    removeCommentFromAnswer(answerId: ID!, commentId: ID!): Comment
   }
 `;
 
