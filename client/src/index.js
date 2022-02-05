@@ -1,23 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './assets/css/index.css';
-import 'typeface-montserrat';
+import './index.css';
 import App from './App';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { ApolloProvider } from '@apollo/client';
-import apolloClient from './utils/apollo/apolloClient';
-import { AuthProvider } from './utils/context/auth';
-import { StateProvider } from './utils/context/state';
+import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <ApolloProvider client={apolloClient}>
-    <Router>
-      <AuthProvider>
-        <StateProvider>
-          <App />
-        </StateProvider>
-      </AuthProvider>
-    </Router>
-  </ApolloProvider>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

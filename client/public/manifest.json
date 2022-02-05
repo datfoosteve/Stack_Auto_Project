@@ -1,25 +1,25 @@
 {
-  "short_name": "Stack autoComplete",
-  "name": "Stack autoComplete | bkturner1220",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
-      "src": "autocomplete.png",
-      "sizes": "64x64",
-      "type": "image/png"
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
     },
     {
-      "src": "autocomplete256.png",
+      "src": "logo192.png",
       "type": "image/png",
-      "sizes": "256x256"
+      "sizes": "192x192"
     },
     {
-      "src": "autocomplete512.png",
+      "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#9ccaeb",
-  "background_color": "#ede0f4"
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }
