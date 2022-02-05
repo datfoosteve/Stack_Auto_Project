@@ -3,6 +3,7 @@ const { User, Question, Comment, Answer } = require('../models');
 const { populate } = require('../models/User');
 const { signToken } = require('../utils/auth');
 
+
 const resolvers = {
   Query: {
     users: async () => {
