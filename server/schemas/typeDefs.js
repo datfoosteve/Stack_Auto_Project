@@ -61,7 +61,7 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(_id: ID!): User
-    questions(_id: ID!): [Question]
+    questions: [Question]
     question(_id: ID!): Question
     answers: [Answer]
     answer(_id: ID!): Answer

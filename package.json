@@ -4,11 +4,11 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
-    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "install": "cd server && npm i && cd ../client && npm i",
+    "start": "concurrently \"cd server && npm start\" \"cd client2 && npm start\"",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client2 && npm start\"",
+    "install": "cd server && npm i && cd ../client2 && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "build": "cd client2 && npm run build"
   },
   "keywords": [],
   "author": "",

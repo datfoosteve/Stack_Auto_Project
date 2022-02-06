@@ -12,9 +12,9 @@ const resolvers = {
     user: async (parent, { _id }) => {
       return User.findOne({ _id }).populate('questions').populate('questionAuthor');
     },
-    questions: async (parent, { _id }) => {
-      const params = _id ? { _id } : {};
-      return Question.find(params).populate('questionAuthor').sort({ createdAt: -1 });
+    questions: async (parent) => {
+   
+      return Question.find().populate('questionAuthor').sort({ createdAt: -1 });
     },
     question: async (parent, { _id }) => {
       return Question.findOne({ _id }).populate('questionAuthor').populate('answers').populate('answerBody');
@@ -43,6 +43,7 @@ const resolvers = {
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
+      console.log(username, email, password);
       const user = await User.create({ username, email, password });
       const token = signToken(user);
       return { token, user };
