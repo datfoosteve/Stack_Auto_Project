@@ -26,9 +26,9 @@ const SingleQuestion = () => {
   return (
     <div className="my-3">
       <h3 className="card-header bg-dark text-light p-2 m-0">
-        {question.questionAuthor} <br />
+        {question.questionTitle} <br />
         <span style={{ fontSize: '1rem' }}>
-          had this question on {question.createdAt}
+         {question.questionAuthor.username} had this question on {question.createdAt}
         </span>
       </h3>
       <div className="bg-light py-4">
@@ -41,12 +41,12 @@ const SingleQuestion = () => {
             lineHeight: '1.5',
           }}
         >
-          {question.questionText}
+          {question.questionBody}
         </blockquote>
       </div>
 
       <div className="my-5">
-        <AnswerList answers={question.anwers} />
+        <AnswerList answers={question.answers} />
       </div>
       <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
         <AnswerForm questionId={question._id} />

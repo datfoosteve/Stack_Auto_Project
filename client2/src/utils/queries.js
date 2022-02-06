@@ -30,20 +30,18 @@ query {
 `;
 
 export const QUERY_SINGLE_QUESTION = gql`
-  query question($_id: ID!) {
+ query question($_id: ID!) {
     question(_id: $_id) {
       _id
       questionBody
-      questionAuthor
+      questionAuthor {
+        username
+      }
       createdAt
-      answers {
-        _id
-        answerBody
-        answerAuthor
-        createdAt
+      questionTitle
       }
     }
-  }
+  
 `;
 
 export const QUERY_ME = gql`
@@ -55,7 +53,6 @@ export const QUERY_ME = gql`
       questions {
         _id
         questionBody
-        questionAuthor
         createdAt
       }
     }

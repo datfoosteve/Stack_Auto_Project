@@ -41,7 +41,7 @@ const QuestionList = ({
             </div>
             <Link
               className="btn btn-primary btn-block btn-squared"
-              to={`/thoughts/${question._id}`}
+              to={`/questions/${question._id}`}
             >
               Join the discussion on this thought.
             </Link>

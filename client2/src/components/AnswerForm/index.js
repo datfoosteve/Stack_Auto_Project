@@ -6,7 +6,7 @@ import { ADD_ANSWER } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
-const AnswerForm = ({ questionId }) => {
+const AnswerForm = ({ _id }) => {
   const [answerText, setAnswerText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
@@ -18,7 +18,7 @@ const AnswerForm = ({ questionId }) => {
     try {
       const { data } = await addAnswer({
         variables: {
-          questionId,
+          _id,
           answerBody: answerText,
           answerAuthor: Auth.getProfile().data.username,
         },
