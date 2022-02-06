@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+// const timestamp = require('../utils/dateFormat');
 const { Schema } = mongoose;
 
 
@@ -41,12 +41,12 @@ const answerSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
+        // get: (timestamp) => dateFormat(timestamp),
     },
     updatedAt: {
         type: Date,
         default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
+        // get: (timestamp) => dateFormat(timestamp),
     },
     
 
