@@ -70,7 +70,7 @@ const resolvers = {
         const user = await User.findById(context.user._id);
         const newQuestion = await Question.create({
 
-          questionAuthor: user,
+         
           questionTitle: questionTitle,
           questionBody: questionBody
         });

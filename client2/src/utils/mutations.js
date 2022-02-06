@@ -30,6 +30,12 @@ export const ADD_QUESTION = gql`
  mutation addQuestion($questionTitle: String!, $questionBody: String!) {
   addQuestion(questionTitle: $questionTitle, questionBody: $questionBody) {
     _id
+    questionTitle
+    questionBody
+    questionAuthor {
+      username
+  
+    }
   }
 }
 `;
