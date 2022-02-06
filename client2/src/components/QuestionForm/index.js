@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { QUERY_QUESTIONS, QUERY_ME } from '../utils/queries';
-import { ADD_QUESTION } from '../utils/mutations';
-import Auth from '../utils/auth';
+import { QUERY_QUESTIONS, QUERY_ME } from '../../utils/queries';
+import { ADD_QUESTION } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 const QuestionForm = () => {
   const [questionBody, setQuestionBody] = useState('');
@@ -13,7 +13,7 @@ const QuestionForm = () => {
   const [addQuestion, { error }] = useMutation(ADD_QUESTION, {
     update(cache, { data: { addQuestion } }) {
       try {
-        const  { questions }  = cache.readQuery({ query: QUERY_QUESTIONS });
+        const { questions } = cache.readQuery({ query: QUERY_QUESTIONS });
 
         cache.writeQuery({
           query: QUERY_QUESTIONS,
@@ -24,7 +24,7 @@ const QuestionForm = () => {
       }
 
       // update me object's cache
-      const  me  = cache.readQuery({ query: QUERY_ME });
+      const { me } = cache.readQuery({ query: QUERY_ME });
       cache.writeQuery({
         query: QUERY_ME,
         data: { me: { ...me, questions: [...me.questions, addQuestion] } },
@@ -38,9 +38,9 @@ const QuestionForm = () => {
     try {
        await addQuestion({
         variables: {
-          questionAuthor: Auth.getProfile().data.username,
           questionTitle: questionTitle,
           questionBody: questionBody,
+          questionAuthor: Auth.getProfile().data.username,
         },
       });
       setQuestionTitle('');
@@ -66,7 +66,7 @@ const QuestionForm = () => {
 
   return (
     <div>
-      <h3>What's on your mind, King?</h3>
+      <h3>What's on your techy mind?</h3>
 
       {Auth.loggedIn() ? (
         <>
@@ -81,17 +81,15 @@ const QuestionForm = () => {
             className="flex-row justify-center justify-space-between-md align-center"
             onSubmit={handleFormSubmit}
           >
-            <div className="col-12 col-lg-10">
-              <h5>Title:</h5>
+            <div className="col-12 col-lg-9">
               <textarea
                 name="questionTitle"
-                placeholder="Here's a new title..."
+                placeholder="Here's a new question..."
                 value={questionTitle}
                 className="form-input w-100"
-                style={{ lineHeight: '0.5', resize: 'vertical' }}
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
-              <h5>Question:</h5>
               <textarea
                 name="questionBody"
                 placeholder="Here's a new question..."
@@ -102,7 +100,7 @@ const QuestionForm = () => {
               ></textarea>
             </div>
 
-            <div className="col-12 col-lg-4">
+            <div className="col-12 col-lg-3">
               <button className="btn btn-primary btn-block py-3" type="submit">
                 Add Question
               </button>

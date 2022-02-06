@@ -9,6 +9,7 @@ export const QUERY_USER = gql`
       questions {
         _id
         questionBody
+        createdAt
       }
     }
   }
@@ -18,8 +19,6 @@ export const QUERY_QUESTIONS = gql`
 query {
   questions {
   _id
-  questionBody
-  questionTitle
   createdAt
     questionAuthor {
       username
@@ -49,7 +48,6 @@ export const QUERY_ME = gql`
   query me {
     me {
       _id
-      
       username
       email
       questions {
