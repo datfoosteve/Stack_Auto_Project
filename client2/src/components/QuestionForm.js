@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { QUERY_QUESTIONS, QUERY_ME } from '../../utils/queries';
-import { ADD_QUESTION } from '../../utils/mutations';
-import Auth from '../../utils/auth';
+import { QUERY_QUESTIONS, QUERY_ME } from '../utils/queries';
+import { ADD_QUESTION } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const QuestionForm = () => {
   const [questionBody, setQuestionBody] = useState('');
