@@ -18,7 +18,7 @@ const QuestionList = ({
         questions.map((question) => (
           <div key={question._id} className="card mb-3">
             <h4 className="card-header bg-primary text-light p-2 m-0">
-              {showUsername ? (
+              {/* {showUsername ? (
                 <Link
                   className="text-light"
                   to={`/profiles/${question.questionAuthor.username}`}
@@ -34,7 +34,7 @@ const QuestionList = ({
                     You had this question on {question.createdAt}
                   </span>
                 </>
-              )}
+              )} */}
             </h4>
             <div className="card-body bg-light p-2">
               <p>{question.questionBody}</p>
