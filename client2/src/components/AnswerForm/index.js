@@ -7,7 +7,7 @@ import { ADD_ANSWER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const AnswerForm = ({ _id }) => {
-  const [answerText, setAnswerText] = useState('');
+  const [answerBody, setAnswerBody] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addAnswer, { error }] = useMutation(ADD_ANSWER);
@@ -16,15 +16,15 @@ const AnswerForm = ({ _id }) => {
     event.preventDefault();
 
     try {
-      const { data } = await addAnswer({
+       await addAnswer({
         variables: {
           _id,
-          answerBody: answerText,
+          answerBody: answerBody,
           answerAuthor: Auth.getProfile().data.username,
         },
       });
 
-      setAnswerText('');
+      setAnswerBody('');
     } catch (err) {
       console.error(err);
     }
@@ -34,7 +34,7 @@ const AnswerForm = ({ _id }) => {
     const { name, value } = event.target;
 
     if (name === 'answerBody' && value.length <= 280) {
-      setAnswerText(value);
+      setAnswerBody(value);
       setCharacterCount(value.length);
     }
   };
@@ -61,7 +61,7 @@ const AnswerForm = ({ _id }) => {
               <textarea
                 name="answerBody"
                 placeholder="Add your answer..."
-                value={answerText}
+                value={answerBody}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}

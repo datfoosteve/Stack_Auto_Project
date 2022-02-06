@@ -7,7 +7,7 @@ import Auth from '../../utils/auth';
 
 const QuestionForm = () => {
   const [questionBody, setQuestionBody] = useState('');
-
+  const [questionTitle, setQuestionTitle] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addQuestion, { error }] = useMutation(ADD_QUESTION, {
@@ -36,13 +36,14 @@ const QuestionForm = () => {
     event.preventDefault();
 
     try {
-      const { data } = await addQuestion({
+       await addQuestion({
         variables: {
+          questionTitle: questionTitle,
           questionBody: questionBody,
           questionAuthor: Auth.getProfile().data.username,
         },
       });
-
+      setQuestionTitle('');
       setQuestionBody('');
     } catch (err) {
       console.error(err);
@@ -50,8 +51,13 @@ const QuestionForm = () => {
   };
 
   const handleChange = (event) => {
+    event.preventDefault();
     const { name, value } = event.target;
 
+    if (name === 'questionTitle' && value.length <= 280) {
+      setQuestionTitle(value);
+      setCharacterCount(value.length);
+    }
     if (name === 'questionBody' && value.length <= 280) {
       setQuestionBody(value);
       setCharacterCount(value.length);
@@ -77,7 +83,15 @@ const QuestionForm = () => {
           >
             <div className="col-12 col-lg-9">
               <textarea
-                name="questionText"
+                name="questionTitle"
+                placeholder="Here's a new question..."
+                value={questionTitle}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange}
+              ></textarea>
+              <textarea
+                name="questionBody"
                 placeholder="Here's a new question..."
                 value={questionBody}
                 className="form-input w-100"
